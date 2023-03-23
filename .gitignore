@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 notebooks/model.pkl
 notebooks/data
+artifacts
