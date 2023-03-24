@@ -3,6 +3,7 @@ from src.language.components.data_ingestion import DataIngestion
 from src.language.components.data_transformation import DataTransformation
 from src.language.components.model_training import ModelTraining
 from src.language.components.model_evaluation import ModelEvaluation
+from src.language.components.mode_pusher import ModelPusher
 from src.language.logger import logging
 from src.language.exception import CustomException
 from src.language.entity.config_entity import *
@@ -65,6 +66,17 @@ class TrainingPipeline:
             return model_evaluation_artifact
         except Exception as e:
             raise CustomException(e, sys) from e
+        
+    def start_model_pusher(self, model_evaluation_artifacts: ModelEvaluationArtifact):
+        logging.info("Starting model pusher in training pipeline")
+        try: 
+            model_pusher = ModelPusher(model_evaluation_artifacts=model_evaluation_artifacts)
+            logging.info("If model is accepted in model evaluation. Pushing the model into production storage")
+            model_pusher_artifacts = model_pusher.initiate_model_pusher()
+            logging.info("Model pusher step completed successfully in train pipeline")
+            return model_pusher_artifacts
+        except Exception as e:
+            raise CustomException(e, sys)
     
     def run_pipeline(self) -> None:
         logging.info(">>>> Initializing training pipeline <<<<")
@@ -76,6 +88,7 @@ class TrainingPipeline:
                 data_transformation_artifact=data_transformation_artifact,
                 model_trainer_artifact=model_trainer_artifact,
             )
-            print(model_evaluation_artifact)
+            model_pusher_artifact = self.start_model_pusher(model_evaluation_artifacts=model_evaluation_artifact)
+            print(model_pusher_artifact)
         except Exception as e:
             raise CustomException(e, sys)
