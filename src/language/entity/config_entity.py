@@ -25,3 +25,10 @@ class ModelTrainingConfig:
     )
     expected_accuracy: float = MODEL_TRAINER_EXPECTED_SCORE
     model_config_file_path: str = MODEL_TRAINER_MODEL_CONFIG_FILE_PATH
+
+@dataclass
+class ModelEvaluationConfig:
+    s3_model_path: str = S3_BUCKET_MODEL_URI
+    model_evaluation_artifacts_dir: str = os.path.join(from_root(), ARTIFACTS_DIR, MODEL_EVALUATION_DIR)
+    best_model_dir: str = os.path.join(model_evaluation_artifacts_dir, S3_MODEL_DIR_NAME)
+    best_model: str = os.path.join(best_model_dir, S3_MODEL_NAME)
