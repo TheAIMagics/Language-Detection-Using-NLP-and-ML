@@ -32,3 +32,12 @@ class ModelEvaluationConfig:
     model_evaluation_artifacts_dir: str = os.path.join(from_root(), ARTIFACTS_DIR, MODEL_EVALUATION_DIR)
     best_model_dir: str = os.path.join(model_evaluation_artifacts_dir, S3_MODEL_DIR_NAME)
     best_model: str = os.path.join(best_model_dir, S3_MODEL_NAME)
+
+@dataclass
+class PredictionPipelineConfig:
+    s3_model_path: str = S3_BUCKET_MODEL_URI
+    prediction_artifact_dir = os.path.join(from_root(), STATIC_DIR)
+    model_download_path = os.path.join(prediction_artifact_dir, MODEL_SUB_DIR)
+    model_file_path = os.path.join(model_download_path, MODEL_NAME)
+    transform_file_path = os.path.join(model_download_path, TRANSFORM_OBJECT_NAME)
+    encoder_file_path = os.path.join(model_download_path, ENCODER_NAME)

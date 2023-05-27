@@ -29,3 +29,7 @@ MODEL_EVALUATION_DIR: str = "model_evaluation"
 S3_MODEL_DIR_NAME: str = "s3_model"
 S3_MODEL_NAME: str = "model.pkl"
 MODEL_NAME: str = "model.pkl"
+
+# constants realted to Prediction Pipeline
+STATIC_DIR ="static"
+MODEL_SUB_DIR = 'model'

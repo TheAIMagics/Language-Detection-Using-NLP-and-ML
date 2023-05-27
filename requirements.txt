@@ -4,4 +4,5 @@ scikit-learn
 from-root==1.0.2
 neuro-mf==0.0.5
 dill==0.3.6
+Flask
 -e .
